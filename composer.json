@@ -1,0 +1,11 @@
+{
+    "name": "gilbertojb/cievs",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Cievs\\": "src/"
+        }
+    },
+    "require": {}
+}
