@@ -9,10 +9,10 @@ return function (ContainerBuilder $containerBuilder) {
     // Global Settings Object
     $containerBuilder->addDefinitions([
         'settings' => [
-            'base_path'      => '', // Base path
+            'base_path'      => '',                                          // Base path
             'debug'          => (getenv('APPLICATION_ENV') != 'production'), // Is debug mode
-            'temporary_path' => ROOT_PATH . '/var/tmp',                            // Temporary directory
-            'route_cache'    => ROOT_PATH . '/var/cache/routes',                   // Route cache
+            'temporary_path' => ROOT_PATH . '/var/tmp',                      // Temporary directory
+            'route_cache'    => ROOT_PATH . '/var/cache/routes',             // Route cache
 
             // View settings
             'view' => [
