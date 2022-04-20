@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Cievs\Application\Auth\Auth;
 use Cievs\Domain\Repository\UserRepository;
 use Cievs\Infra\Repository\DatabaseUserRepository;
 use DI\ContainerBuilder;
@@ -37,25 +36,13 @@ return function (ContainerBuilder $containerBuilder) {
             return $logger;
         },
 
-        'auth' => function (ContainerInterface $container) {
-            return new Auth();
-        },
-
         'flash' => function (ContainerInterface $container) {
             return new Messages();
         },
 
         'view' => function (ContainerInterface $container) {
             $settings = $container->get('settings');
-
-            $view = Twig::create($settings['view']['template_path'], $settings['view']['twig']);
-
-            $view->getEnvironment()->addGlobal('auth', [
-                'check' => $container->get('auth')->check(),
-                'user'  => $container->get('auth')->user()
-            ]);
-
-            return $view;
+            return Twig::create($settings['view']['template_path'], $settings['view']['twig']);
         },
 
         'csrf' => function (ContainerInterface $container) {
