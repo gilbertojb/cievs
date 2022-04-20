@@ -5,8 +5,7 @@
     <div class="card">
         <div class="card-body">
             <form action="{{ url_for('auth.signup') }}" method="post">
-                {{ form.input('text', 'Nome', 'first_name', '', error) }}
-                {{ form.input('text', 'Sobrenome', 'last_name', '', error) }}
+                {{ form.input('text', 'Nome Completo', 'name', '', error) }}
                 {{ form.input('email', 'E-Mail', 'email', '', error) }}
                 {{ form.input('password', 'Senha', 'password', '', error) }}
 

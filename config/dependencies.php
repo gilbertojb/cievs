@@ -3,8 +3,11 @@
 declare(strict_types=1);
 
 use Cievs\Application\Auth\Auth;
+use Cievs\Domain\Repository\UserRepository;
+use Cievs\Infra\Repository\DatabaseUserRepository;
 use DI\ContainerBuilder;
 use Doctrine\DBAL\Configuration;
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -14,6 +17,8 @@ use Slim\Csrf\Guard;
 use Slim\Flash\Messages;
 use Slim\Psr7\Factory\ResponseFactory;
 use Slim\Views\Twig;
+
+use function DI\autowire;
 
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
@@ -30,14 +35,6 @@ return function (ContainerBuilder $containerBuilder) {
             $logger->pushHandler($handler);
 
             return $logger;
-        },
-
-        'database' => function (ContainerInterface $container) {
-            $settings = $container->get('settings');
-
-            $config = new Configuration();
-
-            return DriverManager::getConnection($settings['doctrine']['connection'], $config);
         },
 
         'auth' => function (ContainerInterface $container) {
@@ -64,5 +61,18 @@ return function (ContainerBuilder $containerBuilder) {
         'csrf' => function (ContainerInterface $container) {
             return new Guard(new ResponseFactory());
         },
+
+        Connection::class => function (ContainerInterface $container) {
+            $config = new Configuration();
+            $connectionParams = $container->get('settings')['database'];
+
+            return DriverManager::getConnection($connectionParams, $config);
+        },
+
+//        PDO::class => function (ContainerInterface $container) {
+//            return $container->get(Connection::class)->getWrappedConnection();
+//        },
+
+        UserRepository::class => autowire(DatabaseUserRepository::class),
     ]);
 };

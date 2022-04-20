@@ -4,32 +4,19 @@ namespace Cievs\Domain\Model;
 
 class User
 {
-    private string $firstName;
-
-    private string $lastName;
+    private string $name;
 
     private string $email;
 
-    public function __construct(string $firstName, string $lastName, string $email)
+    public function __construct(string $name, string $email)
     {
-        $this->firstName = $firstName;
-        $this->lastName  = $lastName;
-        $this->email     = $email;
+        $this->name  = $name;
+        $this->email = $email;
     }
 
-    public function getFirstName(): string
+    public function getName(): string
     {
-        return $this->firstName;
-    }
-
-    public function getLastName(): string
-    {
-        return $this->lastName;
-    }
-
-    public function getFullName(): string
-    {
-        return $this->firstName . ' ' . $this->lastName;
+        return $this->name;
     }
 
     public function getEmail(): string

@@ -24,27 +24,23 @@ return function (ContainerBuilder $containerBuilder) {
                 ],
             ],
 
-            // doctrine settings
-            'doctrine' => [
-                'meta' => [
-                    'entity_path' => [
-                        ROOT_PATH . '/src/Model/Entity'
-                    ],
-                    'auto_generate_proxies' => true,
-                    'proxy_dir'             => ROOT_PATH . '/var/cache/proxies',
-                    'cache'                 => null,
+            // Database settings
+            'database' => [
+                'driver'    => getenv('DB_DRIVER'),
+                'host'      => getenv('DB_HOST'),
+                'dbname'    => getenv('DB_DATABASE'),
+                'user'      => getenv('DB_USERNAME'),
+                'password'  => getenv('DB_PASSWORD'),
+                'port'      => getenv('DB_PORT'),
+                'charset'   => 'utf8mb4',
+                'collation' => 'utf8mb4_unicode_ci',
+                'driverOptions' => [
+                    PDO::ATTR_PERSISTENT         => false,                                          // Turn off persistent connections
+                    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,                         // Enable exceptions
+                    PDO::ATTR_EMULATE_PREPARES   => true,                                           // Emulate prepared statements
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,                               // Set default fetch mode to array
+                    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci'  // Set character set
                 ],
-                'connection' => [
-                    'driver'    => getenv('DB_DRIVER'),
-                    'host'      => getenv('DB_HOST'),
-                    'dbname'    => getenv('DB_DATABASE'),
-                    'user'      => getenv('DB_USERNAME'),
-                    'password'  => getenv('DB_PASSWORD'),
-                    'port'      => getenv('DB_PORT'),
-                    'charset'   => 'utf8',
-                    'collation' => 'utf8_unicode_ci',
-                    'prefix' => ''
-                ]
             ],
 
             // monolog settings

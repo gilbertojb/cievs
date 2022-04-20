@@ -19,7 +19,6 @@ class CsrfViewMiddleware extends Middleware
 			',
         ]);
 
-        $response = $handler->handle($request);
-        return $response;
+        return $handler->handle($request);
     }
 }

@@ -12,23 +12,11 @@ use Slim\Views\Twig;
 
 abstract class BaseController
 {
-    protected Twig $view;
-
-    protected Logger $logger;
-
-    protected Messages $flash;
-
-    protected Connection $database;
-
-    protected $router;
+    protected ContainerInterface $container;
 
     public function __construct(ContainerInterface $container)
     {
-        $this->view     = $container->get('view');
-        $this->logger   = $container->get('logger');
-        $this->database = $container->get('database');
-        $this->flash    = $container->get('flash');
-        $this->router   = $container->get('router');
+        $this->container = $container;
     }
 
     protected function render(Request $request, Response $response, string $viewName, array $params = []): Response
@@ -41,5 +29,12 @@ abstract class BaseController
         $template = sprintf('views/%s.twig', $viewName);
 
         return $this->view->render($response, $template, $params);
+    }
+
+    public function __get($property)
+    {
+        if ($this->container->get($property)) {
+            return $this->container->get($property);
+        }
     }
 }
