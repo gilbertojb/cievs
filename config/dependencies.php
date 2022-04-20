@@ -61,7 +61,7 @@ return function (ContainerBuilder $containerBuilder) {
             return $view;
         },
 
-        'csrf' => function(ContainerInterface $container) {
+        'csrf' => function (ContainerInterface $container) {
             return new Guard(new ResponseFactory());
         },
     ]);

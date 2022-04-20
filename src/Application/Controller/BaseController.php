@@ -20,17 +20,23 @@ abstract class BaseController
 
     protected Connection $database;
 
+    protected $router;
+
     public function __construct(ContainerInterface $container)
     {
         $this->view     = $container->get('view');
         $this->logger   = $container->get('logger');
         $this->database = $container->get('database');
         $this->flash    = $container->get('flash');
+        $this->router   = $container->get('router');
     }
 
     protected function render(Request $request, Response $response, string $viewName, array $params = []): Response
     {
-        $params['flash'] = $this->flash->getMessage('info');
+        $params['info']    = $this->flash->getFirstMessage('info');
+        $params['success'] = $this->flash->getFirstMessage('success');
+        $params['error']   = $this->flash->getFirstMessage('error');
+        $params['warning'] = $this->flash->getFirstMessage('warning');
 
         $template = sprintf('views/%s.twig', $viewName);
 

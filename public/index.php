@@ -7,6 +7,7 @@ use Cievs\Application\Middleware\ValidationErrorsMiddleware;
 use DI\ContainerBuilder;
 use Slim\Csrf\Guard;
 use Slim\Factory\AppFactory;
+use Slim\Handlers\Strategies\RequestResponseArgs;
 
 session_start();
 define('ROOT_PATH', realpath(__DIR__ . '/..'));
@@ -37,6 +38,14 @@ $settings = $container->get('settings');
 // Instantiate the app
 $app = AppFactory::createFromContainer($container);
 $app->setBasePath($settings['base_path']);
+
+$routeCollector = $app->getRouteCollector();
+$routeCollector->setDefaultInvocationStrategy(new RequestResponseArgs());
+$routeParser = $app->getRouteCollector()->getRouteParser();
+
+$container->set('router', function () use ($routeParser) {
+    return $routeParser;
+});
 
 // Register middleware
 $middleware = require ROOT_PATH . '/config/middlewares.php';
