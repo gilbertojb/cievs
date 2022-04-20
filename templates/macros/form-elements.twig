@@ -1,0 +1,13 @@
+{% macro input(type, label, name, value, error) %}
+    {% set classError = error[name] is not empty ? 'is-invalid' : '' %}
+
+    <div class="mb-3">
+        <label class="form-label">{{ label }}</label>
+        <input type="{{ type }}" name="{{ name }}" value="{{ value }}" class="form-control {{ classError }}" />
+        <div class="invalid-feedback">{{ error[name] }}</div>
+    </div>
+{% endmacro %}
+
+{% macro input_hidden(name, value) %}
+    <input type="hidden" name="{{ name }}" value="{{ value }}" />
+{% endmacro %}

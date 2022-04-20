@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
+use Cievs\Application\Auth\Auth;
+use DI\ContainerBuilder;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\DriverManager;
-use DI\ContainerBuilder;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
 use Psr\Container\ContainerInterface;
+use Slim\Csrf\Guard;
 use Slim\Flash\Messages;
+use Slim\Psr7\Factory\ResponseFactory;
 use Slim\Views\Twig;
 
 return function (ContainerBuilder $containerBuilder) {
@@ -37,9 +40,9 @@ return function (ContainerBuilder $containerBuilder) {
             return DriverManager::getConnection($settings['doctrine']['connection'], $config);
         },
 
-//        'session' => function (ContainerInterface $container) {
-//            return new \App\Middleware\SessionMiddleware;
-//        },
+        'auth' => function (ContainerInterface $container) {
+            return new Auth();
+        },
 
         'flash' => function (ContainerInterface $container) {
             return new Messages();
@@ -47,7 +50,19 @@ return function (ContainerBuilder $containerBuilder) {
 
         'view' => function (ContainerInterface $container) {
             $settings = $container->get('settings');
-            return Twig::create($settings['view']['template_path'], $settings['view']['twig']);
+
+            $view = Twig::create($settings['view']['template_path'], $settings['view']['twig']);
+
+            $view->getEnvironment()->addGlobal('auth', [
+                'check' => $container->get('auth')->check(),
+                'user'  => $container->get('auth')->user()
+            ]);
+
+            return $view;
+        },
+
+        'csrf' => function(ContainerInterface $container) {
+            return new Guard(new ResponseFactory());
         },
     ]);
 };

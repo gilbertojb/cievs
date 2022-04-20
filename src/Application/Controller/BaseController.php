@@ -1,6 +1,6 @@
 <?php
 
-namespace Cievs\Controller;
+namespace Cievs\Application\Controller;
 
 use Doctrine\DBAL\Connection;
 use Monolog\Logger;

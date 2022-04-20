@@ -2,15 +2,21 @@
 
 declare(strict_types=1);
 
+use Cievs\Application\Middleware\CsrfViewMiddleware;
+use Cievs\Application\Middleware\ValidationErrorsMiddleware;
 use DI\ContainerBuilder;
+use Slim\Csrf\Guard;
 use Slim\Factory\AppFactory;
 
 session_start();
-
 define('ROOT_PATH', realpath(__DIR__ . '/..'));
 
 // Include the composer autoloader.
 require ROOT_PATH . '/vendor/autoload.php';
+
+// Load env vars
+$dotenv = \Dotenv\Dotenv::createUnsafeImmutable(ROOT_PATH);
+$dotenv->load();
 
 // Instantiate PHP-DI ContainerBuilder
 $containerBuilder = new ContainerBuilder();
@@ -39,6 +45,12 @@ $middleware($app);
 // Register routes
 $routes = require ROOT_PATH . '/config/routes.php';
 $routes($app);
+
+$app->add(new ValidationErrorsMiddleware($container));
+$app->add(new CsrfViewMiddleware($container));
+
+// Register CSRF Middleware To Be Executed On All Routes
+$app->add('csrf');
 
 // Add the routing middleware.
 $app->addRoutingMiddleware();

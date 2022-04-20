@@ -35,11 +35,15 @@ return function (ContainerBuilder $containerBuilder) {
                     'cache'                 => null,
                 ],
                 'connection' => [
-                    'driver'   => 'pdo_mysql',
-                    'host'     => getenv('DB_HOST'),
-                    'dbname'   => getenv('DB_NAME'),
-                    'user'     => getenv('DB_USER'),
-                    'password' => getenv('DB_PASS'),
+                    'driver'    => getenv('DB_DRIVER'),
+                    'host'      => getenv('DB_HOST'),
+                    'dbname'    => getenv('DB_DATABASE'),
+                    'user'      => getenv('DB_USERNAME'),
+                    'password'  => getenv('DB_PASSWORD'),
+                    'port'      => getenv('DB_PORT'),
+                    'charset'   => 'utf8',
+                    'collation' => 'utf8_unicode_ci',
+                    'prefix' => ''
                 ]
             ],
 

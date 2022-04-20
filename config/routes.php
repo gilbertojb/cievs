@@ -2,10 +2,18 @@
 
 declare(strict_types=1);
 
+use Cievs\Application\Controller\HomeController;
+use Cievs\Application\Controller\AuthController;
 use Slim\App;
 
-use Cievs\Controller\HomeController;
-
 return function (App $app) {
-    $app->get('/', [HomeController::class, 'index'])->setName('home');
+    $app->get('/', HomeController::class . ':index')->setName('home');
+
+    $app->group('/auth', function ($group) {
+        $group->get('/signup', AuthController::class . ':signUp')->setName('auth.signup');
+//        $group->post('/auth/signup', AuthController::class . ':postSignUp');
+
+//        $group->get('/auth/signin', AuthController::class . ':getSignIn')->setName('auth.signin');
+//        $group->post('/auth/signin', AuthController::class . ':postSignIn');
+    });
 };
