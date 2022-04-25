@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Cievs\Domain\Repository\UserRepository;
-use Cievs\Infra\Repository\DatabaseUserRepository;
+use Cievs\Domain\Repository\EstadoRepository;
+use Cievs\Infra\Repository\DatabaseEstadoRepository;
 use DI\ContainerBuilder;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
@@ -60,6 +60,6 @@ return function (ContainerBuilder $containerBuilder) {
 //            return $container->get(Connection::class)->getWrappedConnection();
 //        },
 
-        UserRepository::class => autowire(DatabaseUserRepository::class),
+        EstadoRepository::class => autowire(DatabaseEstadoRepository::class),
     ]);
 };

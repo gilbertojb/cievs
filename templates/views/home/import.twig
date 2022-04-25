@@ -1,0 +1,19 @@
+{% extends "layout/default.twig" %}
+{% import "macros/form-elements.twig" as form %}
+
+{% block content %}
+    <h1>Enviar novo arquivo</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+                {{ csrf.field | raw }}
+
+                {{ form.input_file('Selecione um arquivo', 'arquivo') }}
+
+                <a href="{{ url_for('home') }}" class="btn btn-secondary">Voltar</a>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

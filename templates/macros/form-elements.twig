@@ -11,3 +11,13 @@
 {% macro input_hidden(name, value) %}
     <input type="hidden" name="{{ name }}" value="{{ value }}" />
 {% endmacro %}
+
+{% macro input_file(label, name, error) %}
+    {% set classError = error[name] is not empty ? 'is-invalid' : '' %}
+
+    <div class="mb-3">
+        <label class="form-label">{{ label }}</label>
+        <input type="file" name="{{ name }}" class="form-control {{ classError }}" accept="text/csv" />
+        <div class="invalid-feedback">{{ error[name] }}</div>
+    </div>
+{% endmacro %}
