@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Cievs\Domain\Repository\EstadoRepository;
-use Cievs\Infra\Repository\DatabaseEstadoRepository;
 use DI\ContainerBuilder;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
@@ -59,7 +57,5 @@ return function (ContainerBuilder $containerBuilder) {
 //        PDO::class => function (ContainerInterface $container) {
 //            return $container->get(Connection::class)->getWrappedConnection();
 //        },
-
-        EstadoRepository::class => autowire(DatabaseEstadoRepository::class),
     ]);
 };
