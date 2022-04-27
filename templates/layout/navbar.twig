@@ -1,41 +1,13 @@
-{#
-<nav class="navbar navbar-light bg-light mb-5">
-    <div class="container">
-        <span class="navbar-brand mb-0 h1">CIEVS</span>
-
-
-        <ul class="nav justify-content-end">
-            {% if auth.check %}
-            <li class="nav-item">
-
-            </li>
-
-            <li class="nav-item">
-                Olá {{ auth.user.name }}, sejá bem vindo!
-            </li>
-            {% endif %}
-
-            {% if not auth.check %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('auth.signin') }}">
-                    Entrar
-                </a>
-            </li>
-            {% endif %}
-        </ul>
-
-    </div>
-</nav>
-#}
-
 <header class="p-3 mb-3 border-bottom">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            {#
             {% if not auth.check %}
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="{{ url_for('auth.signin') }}" class="nav-link px-2 link-secondary">Entrar</a></li>
             </ul>
             {% endif %}
+            #}
 
             {% if auth.check %}
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">

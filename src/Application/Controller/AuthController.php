@@ -32,6 +32,6 @@ final class AuthController extends BaseController
             return $response->withStatus(302)->withHeader('Location', $this->router->urlFor('auth.signin'));
         }
 
-        return $response->withStatus(302)->withHeader('Location', $this->router->urlFor('home'));
+        return $response->withStatus(302)->withHeader('Location', $this->router->urlFor('dashboard'));
     }
 }

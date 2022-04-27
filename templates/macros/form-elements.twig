@@ -21,3 +21,12 @@
         <div class="invalid-feedback">{{ error[name] }}</div>
     </div>
 {% endmacro %}
+
+
+{% macro input_floating(type, name, id, placeholder) %}
+<div class="form-floating mb-3">
+    <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{ id }}" placeholder="{{ placeholder }}" />
+    <label for="{{ id }}">{{ placeholder }}</label>
+</div>
+{% endmacro %}
+

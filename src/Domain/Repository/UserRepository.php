@@ -33,7 +33,12 @@ class UserRepository extends Repository
             $user = $this->connection->fetchAssociative("SELECT * FROM users WHERE email = ?", [$email]);
 
             if ($user) {
-                return new User($user['id'], $user['name'], $user['email'], $user['password']);
+                return new User(
+                    $user['id'],
+                    $user['name'],
+                    $user['email'],
+                    $user['password']
+                );
             }
 
             return null;

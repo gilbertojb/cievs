@@ -11,4 +11,9 @@ final class HomeController extends BaseController
     {
         return $this->render($request, $response, 'home/index');
     }
+
+    public function dashboard(Request $request, Response $response, array $args = []): Response
+    {
+        return $this->render($request, $response, 'home/dashboard');
+    }
 }

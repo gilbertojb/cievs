@@ -14,7 +14,7 @@ class AuthMiddleware extends Middleware
 
         if (! $this->container->get('auth')->check()) {
             $this->container->get('flash')->addMessage('error', 'Você precisa estar logado!');
-            $url = $this->container->get('router')->urlFor('auth.signin');
+            $url = $this->container->get('router')->urlFor('home');
 
             return $response->withStatus(302)->withHeader('Location', $url);
         }

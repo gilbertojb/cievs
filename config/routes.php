@@ -21,6 +21,7 @@ return function (App $app, ContainerInterface $container) {
         $group->post('/signin', [AuthController::class, 'postSignIn']);
     });
 
+    $app->get('/dashboard', [HomeController::class, 'dashboard'])->setName('dashboard')->add(new AuthMiddleware($container));
 
     $app->group('/auth', function (Group $group) {
         $group->get('/signout', [AuthController::class, 'getSignOut'])->setName('auth.signout');
