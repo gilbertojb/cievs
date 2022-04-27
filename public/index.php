@@ -53,7 +53,7 @@ $middleware($app);
 
 // Register routes
 $routes = require ROOT_PATH . '/config/routes.php';
-$routes($app);
+$routes($app, $container);
 
 $app->add(new ValidationErrorsMiddleware($container));
 $app->add(new CsrfViewMiddleware($container));

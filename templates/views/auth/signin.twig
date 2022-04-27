@@ -1,0 +1,21 @@
+{% extends "layout/default.twig" %}
+{% import "macros/form-elements.twig" as form %}
+
+{% block content %}
+<div style="width: 350px; margin: 50px auto;">
+    <h1 class="mb-3">Autenticação</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <form method="post" action="{{ url_for('auth.signin') }}">
+                {{ csrf.field | raw }}
+
+                {{ form.input('text', 'E-mail', 'email', '', error) }}
+                {{ form.input('password', 'Senha', 'password', '', error) }}
+
+                <button class="w-100 btn btn-primary" type="submit">Entrar</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Cievs\Application\Support\Auth;
+use Cievs\Domain\Repository\UserRepository;
 use DI\ContainerBuilder;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
@@ -38,9 +40,23 @@ return function (ContainerBuilder $containerBuilder) {
             return new Messages();
         },
 
+        'auth' => function (ContainerInterface $container) {
+            return new Auth(new UserRepository(
+                $container->get(Connection::class),
+                $container
+            ));
+        },
+
         'view' => function (ContainerInterface $container) {
             $settings = $container->get('settings');
-            return Twig::create($settings['view']['template_path'], $settings['view']['twig']);
+            $view = Twig::create($settings['view']['template_path'], $settings['view']['twig']);
+
+            $view->getEnvironment()->addGlobal('auth', [
+                'check' => $container->get('auth')->check(),
+                'user'  => $container->get('auth')->user(),
+            ]);
+
+	        return $view;
         },
 
         'csrf' => function (ContainerInterface $container) {
@@ -53,9 +69,5 @@ return function (ContainerBuilder $containerBuilder) {
 
             return DriverManager::getConnection($connectionParams, $config);
         },
-
-//        PDO::class => function (ContainerInterface $container) {
-//            return $container->get(Connection::class)->getWrappedConnection();
-//        },
     ]);
 };

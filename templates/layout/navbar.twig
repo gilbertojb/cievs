@@ -1,13 +1,56 @@
+{#
 <nav class="navbar navbar-light bg-light mb-5">
     <div class="container">
         <span class="navbar-brand mb-0 h1">CIEVS</span>
 
+
         <ul class="nav justify-content-end">
+            {% if auth.check %}
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('estados.listagem') }}">
-                    Estados
+
+            </li>
+
+            <li class="nav-item">
+                Olá {{ auth.user.name }}, sejá bem vindo!
+            </li>
+            {% endif %}
+
+            {% if not auth.check %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('auth.signin') }}">
+                    Entrar
                 </a>
             </li>
+            {% endif %}
         </ul>
+
     </div>
 </nav>
+#}
+
+<header class="p-3 mb-3 border-bottom">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            {% if not auth.check %}
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="{{ url_for('auth.signin') }}" class="nav-link px-2 link-secondary">Entrar</a></li>
+            </ul>
+            {% endif %}
+
+            {% if auth.check %}
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="{{ url_for('estados.listagem') }}" class="nav-link px-2 link-secondary">Estados</a></li>
+            </ul>
+
+            <div class="dropdown text-end">
+                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://ui-avatars.com/api/?name={{ auth.user.name }}" alt="mdo" width="32" height="32" class="rounded-circle">
+                </a>
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
+                    <li><a class="dropdown-item" href="{{ url_for('auth.signout') }}">Sair</a></li>
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</header>
